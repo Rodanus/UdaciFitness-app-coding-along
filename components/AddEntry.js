@@ -16,8 +16,8 @@ function SubmitBtn({ onPress }) {
 class AddEntry extends Component {
   state = {
     run: 0,
-    bike: 20,
-    swim: 10,
+    bike: 0,
+    swim: 0,
     sleep: 0,
     eat: 0
   };
