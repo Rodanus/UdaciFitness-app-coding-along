@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
-import { getMetricMetaInfo, timeToString } from "../utils/helpers";
+import {
+  getMetricMetaInfo,
+  timeToString,
+  getDailyReminderValue
+} from "../utils/helpers";
 import UdaciSlider from "./UdaciSlider";
 import UdaciSteppers from "./UdaciSteppers";
 import DateHeader from "./DateHeader";
@@ -57,7 +61,7 @@ class AddEntry extends Component {
     const key = timeToString();
     const entry = this.state;
 
-    // Update Redux
+    this.props.dispatch(addEntry({ [key]: entry }));
 
     this.setState(() => ({ run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 }));
 
@@ -70,7 +74,7 @@ class AddEntry extends Component {
   reset = () => {
     const key = timeToString();
 
-    // Update Redux
+    this.props.dispatch(addEntry({ [key]: getDailyReminderValue() }));
 
     removeEntry(key);
 
