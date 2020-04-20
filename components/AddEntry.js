@@ -7,6 +7,8 @@ import DateHeader from "./DateHeader";
 import { Ionicons } from "@expo/vector-icons";
 import TextButton from "./TextButton";
 import { submitEntry, removeEntry } from "../utils/api";
+import { connect } from "react-redux";
+import { addEntry } from "../actions";
 
 function SubmitBtn({ onPress }) {
   return (
@@ -16,7 +18,7 @@ function SubmitBtn({ onPress }) {
   );
 }
 
-export default class AddEntry extends Component {
+class AddEntry extends Component {
   state = {
     run: 0,
     bike: 0,
@@ -77,7 +79,7 @@ export default class AddEntry extends Component {
   render() {
     const metaInfo = getMetricMetaInfo();
 
-    if (true) {
+    if (this.props.alreadyLogged) {
       return (
         <View>
           <Ionicons name={"ios-happy"} size={100} />
@@ -119,3 +121,13 @@ export default class AddEntry extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const key = timeToString();
+
+  return {
+    alreadyLogged: state[key] && typeof state[key].today === "undefined"
+  };
+}
+
+export default connect(mapStateToProps)(AddEntry);
